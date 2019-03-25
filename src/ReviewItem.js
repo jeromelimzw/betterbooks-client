@@ -1,5 +1,5 @@
 import React from "react";
-import { Feed } from "semantic-ui-react";
+import { Feed, Rating } from "semantic-ui-react";
 
 const ReviewItem = ({
   rating,
@@ -10,12 +10,22 @@ const ReviewItem = ({
 }) => {
   return (
     <Feed.Event>
-      <Feed.Label image={reviewerAvatar} />
+      <Feed.Label>
+        <img src={reviewerAvatar} alt="" />{" "}
+      </Feed.Label>
       <Feed.Content>
-        <Feed.Date>{reviewdate}</Feed.Date>
+        <Feed.Date>
+          {`${new Date(reviewdate).toLocaleString()}`}
+          <Rating
+            icon="heart"
+            defaultRating={rating}
+            maxRating={5}
+            disabled
+            className="blue"
+          />
+        </Feed.Date>
         <Feed.Summary>
-          <a href="/">{reviewer}</a> said: <br />
-          {review}{" "}
+          <a href="/">{reviewer} </a>said: {review}
         </Feed.Summary>
       </Feed.Content>
     </Feed.Event>

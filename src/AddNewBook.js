@@ -101,9 +101,7 @@ class AddNewBook extends Component {
               <Form.Field>
                 <Image
                   src={
-                    !a.imageLinks.thumbnail
-                      ? "img/nocover.jpg"
-                      : a.imageLinks.thumbnail
+                    !a.imageLinks ? "img/nocover.jpg" : a.imageLinks.thumbnail
                   }
                   className="mb4 br3 shadow-5 "
                   width="200"
@@ -117,7 +115,7 @@ class AddNewBook extends Component {
               </Form.Field>
               <Form.Field>
                 <label>Author(s)</label>
-                <input value={a.authors} readOnly />
+                <input value={a.authors.join("  ,  ")} readOnly />
               </Form.Field>
               <Form.Field>
                 <label>Description</label>

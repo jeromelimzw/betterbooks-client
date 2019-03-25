@@ -18,6 +18,7 @@ const Routes = () => {
       <Route path="/detailed/:handle" component={DetailedMediaInfo} />
       <Route path="/myinfo" component={DetailedUserInfo} />
       <Route path="/home" component={Dashboard} />
+      <Route path="/" component={LoginForm} />
     </Switch>
   );
 };

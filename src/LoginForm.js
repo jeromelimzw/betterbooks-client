@@ -60,11 +60,11 @@ class LoginForm extends Component {
               onChange={handleChangePassword}
             />
           </Form.Field>
-          <Link to="home">
-            <Button type="submit" color="google plus">
-              Submit
-            </Button>
-          </Link>
+
+          <Button type="submit" color="google plus">
+            Submit
+          </Button>
+
           <Link to="register">
             <span className="ml4">Sign-Up Here ...</span>
           </Link>

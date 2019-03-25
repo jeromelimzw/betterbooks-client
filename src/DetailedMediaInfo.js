@@ -9,7 +9,7 @@ import {
   Button,
   Feed
 } from "semantic-ui-react";
-//import langCodes from "./utils/langCodeConverter";
+import langCodes from "./utils/langCodeConverter";
 
 class DetailedMediaInfo extends Component {
   constructor(props) {
@@ -17,8 +17,8 @@ class DetailedMediaInfo extends Component {
     this.state = { book: [], reviews: [] };
   }
 
-  componentDidMount() {
-    this.getBookInfo();
+  async componentDidMount() {
+    await this.getBookInfo();
   }
 
   async getBookInfo() {
@@ -29,7 +29,6 @@ class DetailedMediaInfo extends Component {
       `http://localhost:8080/api/v1/reviews/${bookId}`
     );
     const reviews = await getReviews.json();
-
     this.setState({ book, reviews });
   }
 
@@ -70,9 +69,12 @@ class DetailedMediaInfo extends Component {
           </Segment>
           <Segment>
             <span className="mr3 fw7">Author(s):</span>{" "}
-            <span className="ba br3 b--blue blue hover-bg-blue hover-white ph2 pv1 pointer">
-              {authors}
-            </span>
+            {authors &&
+              authors.map(a => (
+                <span className="ba br3 b--blue blue hover-bg-blue hover-white ph2 pv1 pointer mh1">
+                  {a}
+                </span>
+              ))}
           </Segment>
           <Segment>
             <span className="mr3 fw7">Media Type:</span>{" "}
@@ -95,7 +97,8 @@ class DetailedMediaInfo extends Component {
           <Segment>
             <span className="mr3 fw7">Language:</span>{" "}
             <span className="ba br3 b--blue blue hover-bg-blue hover-white ph2 pv1 pointer">
-              {language}
+              {language &&
+                langCodes.find(a => a.langCode === language).langEndonym}
             </span>
           </Segment>
         </Segment.Group>
@@ -120,15 +123,19 @@ class DetailedMediaInfo extends Component {
           </Segment>
           <Segment>
             <Feed>
-              {this.state.reviews.map((a, index) => (
-                <ReviewItem
-                  rating={a.score}
-                  review={a.review}
-                  reviewer={a.user.username}
-                  reviewerAvatar={a.user.avatarimgURL}
-                  reviewdate={a.time}
-                />
-              ))}
+              {this.state.reviews.length > 0 ? (
+                this.state.reviews.map((a, index) => (
+                  <ReviewItem
+                    rating={a.score}
+                    review={a.review}
+                    reviewer={a.user.username}
+                    reviewerAvatar={a.user.avatarimgURL}
+                    reviewdate={a.time}
+                  />
+                ))
+              ) : (
+                <h4>Be the first to review this book.</h4>
+              )}
             </Feed>
           </Segment>
         </Segment.Group>

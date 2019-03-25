@@ -36,13 +36,14 @@ class UserCatalogue extends Component {
 
   async handleDeleteBook(id) {
     try {
-      await fetch(`http://localhost:8080/api/v1/books/${id}`, {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }
-      });
+      id !== "5c9962ba97f2bd46d89deee0" &&
+        (await fetch(`http://localhost:8080/api/v1/books/${id}`, {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
+        }));
       this.getBooksInfo();
     } catch (err) {
       console.log(err.message);
