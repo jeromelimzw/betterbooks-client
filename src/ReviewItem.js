@@ -14,19 +14,13 @@ const ReviewItem = ({
         <img src={reviewerAvatar} alt="" />{" "}
       </Feed.Label>
       <Feed.Content>
-        <Feed.Date>
-          {`${new Date(reviewdate).toLocaleString()}`}
-          <Rating
-            icon="heart"
-            defaultRating={rating}
-            maxRating={5}
-            disabled
-            className="blue"
-          />
-        </Feed.Date>
+        <Feed.Date>{`${new Date(reviewdate).toLocaleDateString()}`}</Feed.Date>
         <Feed.Summary>
-          <a href="/">{reviewer} </a>said: {review}
+          <Rating icon="star" defaultRating={rating} maxRating={10} disabled />
         </Feed.Summary>
+        <Feed.Extra>
+          <a href="/">{reviewer} </a>said: {review}
+        </Feed.Extra>
       </Feed.Content>
     </Feed.Event>
   );

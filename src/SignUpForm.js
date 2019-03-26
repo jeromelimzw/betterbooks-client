@@ -6,8 +6,7 @@ import {
   Header,
   Container,
   Breadcrumb,
-  Dimmer,
-  Icon
+  Modal
 } from "semantic-ui-react";
 import { NavLink as Link } from "react-router-dom";
 
@@ -26,15 +25,35 @@ class SignUpForm extends Component {
         </Breadcrumb>
         <Header>Sign Up</Header>
         <Form className=" shadow-5 pa4 ba b--transparent bg-moon-gray bw2">
-          <Dimmer active>
-            <Header as="h1" inverted>
-              Sorry.
-              <br />
-              Due to overwhelming interest.
-              <br />
-              We are closing registration temporarily.
-            </Header>
-          </Dimmer>
+          <Form.Field>
+            <label>
+              Referral Token{"  "}
+              <Modal
+                trigger={
+                  <span href="#" className="blue hover-dark-blue pointer">
+                    (?)
+                  </span>
+                }
+                dimmer="blurring"
+                closeIcon
+              >
+                <Modal.Header>Referral Token</Modal.Header>
+                <Modal.Content image>
+                  <Modal.Description>
+                    <Header>Why is a referral token required?</Header>
+                    <p>
+                      Due to overwhelming interest, as well as to maintain the
+                      quality of the book-reading community, <br />a referral
+                      code from an existing member is required.
+                      <br /> We apologise for the inconvenience caused and hope
+                      for your understanding.
+                    </p>
+                  </Modal.Description>
+                </Modal.Content>
+              </Modal>
+            </label>
+            <input placeholder="Referral Token" />
+          </Form.Field>
           <Form.Field>
             <label>First Name</label>
             <input placeholder="First Name" />

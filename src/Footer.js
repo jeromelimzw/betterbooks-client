@@ -9,7 +9,7 @@ class NavBar extends Component {
       navinfo: [
         { link: "/userlib", icon: "book", label: "Your Books" },
         { link: "/newbook", icon: "plus", label: "Add Book" },
-        { link: "/login", icon: "users", label: "Community" },
+        { link: "/community", icon: "users", label: "Community" },
         { link: "/myinfo", icon: "user", label: "Account" }
       ]
     };

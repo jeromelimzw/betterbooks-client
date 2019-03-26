@@ -7,11 +7,13 @@ import UserCatalogue from "./UserCatalogue";
 import DetailedMediaInfo from "./DetailedMediaInfo";
 import DetailedUserInfo from "./DetailedUserInfo";
 import Dashboard from "./Dashboard";
+import CommunityPage from "./CommunityPage";
 
 const Routes = () => {
   return (
     <Switch>
       <Route path="/login" component={LoginForm} />
+      <Route path="/community" component={CommunityPage} />
       <Route path="/register" component={SignupForm} />
       <Route path="/newbook" component={AddNewBook} />
       <Route path="/userlib" component={UserCatalogue} />

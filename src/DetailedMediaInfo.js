@@ -7,7 +7,11 @@ import {
   Header,
   Breadcrumb,
   Button,
-  Feed
+  Feed,
+  Modal,
+  FormField,
+  Form,
+  Rating
 } from "semantic-ui-react";
 import langCodes from "./utils/langCodeConverter";
 
@@ -42,7 +46,8 @@ class DetailedMediaInfo extends Component {
       language,
       publisher,
       description,
-      ISBN13
+      ISBN13,
+      imageUrl
     } = this.state.book;
     return (
       <Container className="mv7 scrolling animated fadeInUp">
@@ -56,13 +61,12 @@ class DetailedMediaInfo extends Component {
         <Header>Media Details</Header>
         <Container>
           <Image
-            src={this.state.book.imageUrl}
+            src={imageUrl}
             className=" br3 shadow-5"
             width="220"
             height="330"
           />
         </Container>
-
         <Segment.Group raised>
           <Segment>
             <span className="mr3 fw7">Title:</span> {title}
@@ -139,7 +143,41 @@ class DetailedMediaInfo extends Component {
             </Feed>
           </Segment>
         </Segment.Group>
-        <Button color="teal">Review this Book</Button>
+        <Modal
+          trigger={<Button color="teal">Review this Book</Button>}
+          dimmer="blurring"
+          closeIcon
+        >
+          <Modal.Header>Review this Book</Modal.Header>
+          <Modal.Content image>
+            <Image wrapped size="small" src={imageUrl} />
+            <Modal.Description>
+              <p className="f3 mb0">{title}</p>
+              <p className="f5 mb2 gray">By: {authors}</p>
+              <Form>
+                <FormField>
+                  <label>Score:</label>
+                  <Rating
+                    icon="star"
+                    defaultRating={5}
+                    maxRating={10}
+                    className="blue"
+                  />
+                </FormField>
+                <FormField>
+                  <label>Review:</label>
+                  <textarea
+                    placeholder="write your review here"
+                    cols="70"
+                    rows="3"
+                  />
+                </FormField>
+              </Form>
+              <br />
+              <Button>Submit Review</Button>
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
       </Container>
     );
   }
