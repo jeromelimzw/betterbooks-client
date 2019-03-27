@@ -1,4 +1,4 @@
-import { Container, Header, Breadcrumb, Feed } from "semantic-ui-react";
+import { Container, Header, Breadcrumb, Feed, Grid } from "semantic-ui-react";
 import { NavLink as Link } from "react-router-dom";
 import ReviewItem from "./ReviewItem";
 
@@ -14,7 +14,6 @@ class CommunityPage extends Component {
 
   async componentDidMount() {
     await this.getBooksInfo();
-    console.log(this.state.books);
   }
 
   async getBooksInfo() {
@@ -34,7 +33,7 @@ class CommunityPage extends Component {
 
     return (
       <React.Fragment>
-        <Container className="mv7 animated fadeInUp">
+        <Container className="mv7 animated fadeIn">
           <Breadcrumb size="big">
             <Breadcrumb.Section link>Home</Breadcrumb.Section>
             <Breadcrumb.Divider />
@@ -45,7 +44,7 @@ class CommunityPage extends Component {
 
           {books.map((a, index) => {
             return (
-              <Link to={`/detailed/${a._id}`}>
+              <Link to={`/detailed/${a._id}`} key={index}>
                 <img
                   src={a.imageUrl}
                   alt="book cover"
@@ -58,19 +57,41 @@ class CommunityPage extends Component {
           })}
 
           <h3>Recent Reviews:</h3>
-          <Feed>
-            {!books.reviews
-              ? undefined
-              : books[0].reviews[0].map(a => (
-                  <ReviewItem
-                    rating={a.score}
-                    review={a.review}
-                    reviewer={a.user.username}
-                    reviewerAvatar={a.user.avatarimgURL}
-                    reviewdate={a.time}
-                  />
-                ))}
-          </Feed>
+
+          <Grid columns="5" divided>
+            {books
+              .filter(a => a.reviews.length !== 0)
+              .slice(0, 3)
+              .reverse()
+              .map((a, index) => (
+                <Grid.Row>
+                  <Grid.Column>
+                    <Link to={`/detailed/${a._id}`}>
+                      <img
+                        src={a.imageUrl}
+                        alt="book cover"
+                        width="140"
+                        height="200"
+                        className="shadow-5 ma3 grow pointer"
+                      />
+                    </Link>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Feed>
+                      {a.reviews.map((a, index) => (
+                        <ReviewItem
+                          rating={a.score}
+                          review={a.review}
+                          reviewer={a.user.username}
+                          reviewerAvatar={a.user.avatarimgURL}
+                          reviewdate={a.time}
+                        />
+                      ))}
+                    </Feed>
+                  </Grid.Column>
+                </Grid.Row>
+              ))}
+          </Grid>
         </Container>
       </React.Fragment>
     );
