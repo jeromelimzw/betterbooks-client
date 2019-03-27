@@ -18,7 +18,7 @@ import langCodes from "./utils/langCodeConverter";
 class DetailedMediaInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = { book: [], reviews: [] };
+    this.state = { book: [], user: "", review: "", rating: "" };
   }
 
   async componentDidMount() {
@@ -29,12 +29,33 @@ class DetailedMediaInfo extends Component {
     const bookId = this.props.match.url.substring(10);
     const oneBook = await fetch(`http://localhost:8080/api/v1/books/${bookId}`);
     const book = await oneBook.json();
-    const getReviews = await fetch(
-      `http://localhost:8080/api/v1/reviews/${bookId}`
-    );
-    const reviews = await getReviews.json();
-    this.setState({ book, reviews });
+    this.setState({ book });
   }
+
+  handleRate = (e, { rating, maxRating }) =>
+    this.setState({ rating, maxRating });
+  handleChangeReview = event => this.setState({ review: event.target.value });
+
+  addReview = async () => {
+    const bookId = this.props.match.url.substring(10);
+    try {
+      await fetch(`http://localhost:8080/api/v1/books/${bookId}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          user: "5c94f71f6bd0fb2120e6f711",
+          review: this.state.review,
+          score: this.state.rating
+        })
+      });
+      this.getBookInfo();
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   render() {
     const {
@@ -47,7 +68,8 @@ class DetailedMediaInfo extends Component {
       publisher,
       description,
       ISBN13,
-      imageUrl
+      imageUrl,
+      reviews
     } = this.state.book;
     return (
       <Container className="mv7 scrolling animated fadeInUp">
@@ -127,8 +149,10 @@ class DetailedMediaInfo extends Component {
           </Segment>
           <Segment>
             <Feed>
-              {this.state.reviews.length > 0 ? (
-                this.state.reviews.map((a, index) => (
+              {!reviews ? (
+                undefined
+              ) : reviews.length > 0 ? (
+                reviews.map((a, index) => (
                   <ReviewItem
                     rating={a.score}
                     review={a.review}
@@ -157,12 +181,7 @@ class DetailedMediaInfo extends Component {
               <Form>
                 <FormField>
                   <label>Score:</label>
-                  <Rating
-                    icon="star"
-                    defaultRating={5}
-                    maxRating={10}
-                    className="blue"
-                  />
+                  <Rating icon="star" maxRating={10} onRate={this.handleRate} />
                 </FormField>
                 <FormField>
                   <label>Review:</label>
@@ -170,11 +189,12 @@ class DetailedMediaInfo extends Component {
                     placeholder="write your review here"
                     cols="70"
                     rows="3"
+                    onChange={this.handleChangeReview}
                   />
                 </FormField>
               </Form>
               <br />
-              <Button>Submit Review</Button>
+              <Button onClick={this.addReview}>Submit Review</Button>
             </Modal.Description>
           </Modal.Content>
         </Modal>

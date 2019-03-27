@@ -17,14 +17,13 @@ class CommunityPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: [],
-      reviews: []
+      books: []
     };
   }
 
   async componentDidMount() {
-    this.getBooksInfo();
-    this.getReviews();
+    await this.getBooksInfo();
+    console.log(this.state.books);
   }
 
   async getBooksInfo() {
@@ -34,18 +33,6 @@ class CommunityPage extends Component {
       !res.length === 0
         ? this.setState({ books: [] })
         : this.setState({ books: res });
-    } catch (err) {
-      console.log(err.message);
-    }
-  }
-
-  async getReviews() {
-    try {
-      const reviews = await fetch(`http://localhost:8080/api/v1/reviews`);
-      const allreviews = await reviews.json();
-      !allreviews.length === 0
-        ? this.setState({ reviews: [] })
-        : this.setState({ reviews: allreviews });
     } catch (err) {
       console.log(err.message);
     }
@@ -81,15 +68,17 @@ class CommunityPage extends Component {
 
           <h3>Recent Reviews:</h3>
           <Feed>
-            {this.state.reviews.map((a, index) => (
-              <ReviewItem
-                rating={a.score}
-                review={a.review}
-                reviewer={a.user.username}
-                reviewerAvatar={a.user.avatarimgURL}
-                reviewdate={a.time}
-              />
-            ))}
+            {!books.reviews
+              ? undefined
+              : books[0].reviews[0].map(a => (
+                  <ReviewItem
+                    rating={a.score}
+                    review={a.review}
+                    reviewer={a.user.username}
+                    reviewerAvatar={a.user.avatarimgURL}
+                    reviewdate={a.time}
+                  />
+                ))}
           </Feed>
         </Container>
       </React.Fragment>

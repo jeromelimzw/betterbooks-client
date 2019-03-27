@@ -7,7 +7,8 @@ import {
   Button,
   Image,
   Breadcrumb,
-  TextArea
+  TextArea,
+  Modal
 } from "semantic-ui-react";
 import langCodes from "./utils/langCodeConverter";
 
@@ -171,13 +172,39 @@ class AddNewBook extends Component {
           </Form.Field>
           {this.state.data.length === 1 ? (
             <Form.Field className="flex justify-around">
-              <Link to="/userlib">
-                <Button onClick={this.handleAddToShelf} color="google plus">
-                  Add to Shelf
-                </Button>
+              <Link to="/newbook">
+                <Modal
+                  trigger={
+                    <Button onClick={this.handleAddToShelf} color="google plus">
+                      Add to Shelf
+                    </Button>
+                  }
+                  dimmer="blurring"
+                >
+                  {" "}
+                  <Modal.Header>Adding Book to Shelf</Modal.Header>
+                  <Modal.Content image>
+                    <Modal.Description>
+                      <h4>
+                        The book has been added to your bookshelf
+                        <br />
+                        Would you like to go there now?
+                      </h4>
+                      <Link to="userlib">
+                        <Button>Go to BookShelf</Button>
+                      </Link>{" "}
+                      <Link to="newbook">
+                        <Button
+                          onClick={() => window.location.reload()}
+                          color="google plus"
+                        >
+                          Add Another Book
+                        </Button>
+                      </Link>
+                    </Modal.Description>
+                  </Modal.Content>
+                </Modal>
               </Link>
-
-              <Button color="google plus">Add Another Book</Button>
             </Form.Field>
           ) : (
             undefined
