@@ -46,12 +46,13 @@ class DetailedMediaInfo extends Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          user: "5c94f71f6bd0fb2120e6f711",
+          user: "5c9aea0f952f7e1624fccc57",
           review: this.state.review,
           score: this.state.rating
         })
       });
       this.getBookInfo();
+      window.location.reload();
     } catch (err) {
       console.log(err.message);
     }
@@ -109,7 +110,7 @@ class DetailedMediaInfo extends Component {
             </span>
           </Segment>
           <Segment>
-            <span className="mr3 fw7">Year:</span>{" "}
+            <span className="mr3 fw7">Published:</span>{" "}
             <span className="ba br3 b--blue blue hover-bg-blue hover-white ph2 pv1 pointer">
               {publishedDate}
             </span>
@@ -156,8 +157,10 @@ class DetailedMediaInfo extends Component {
                   <ReviewItem
                     rating={a.score}
                     review={a.review}
-                    reviewer={a.user.username}
-                    reviewerAvatar={a.user.avatarimgURL}
+                    reviewer={!a.user ? "deleted user" : a.user.username}
+                    reviewerAvatar={
+                      !a.user ? "img/deleteduser.jpg" : a.user.avatarimgURL
+                    }
                     reviewdate={a.time}
                   />
                 ))
@@ -194,7 +197,22 @@ class DetailedMediaInfo extends Component {
                 </FormField>
               </Form>
               <br />
-              <Button onClick={this.addReview}>Submit Review</Button>
+              <Modal
+                trigger={
+                  <Button onClick={this.addReview}>Submit Review</Button>
+                }
+                dimmer="blurring"
+                size="tiny"
+              >
+                <Modal.Content>
+                  <Modal.Description>
+                    <p className="f3">
+                      Your review has been submitted. <br />
+                      Thank You.
+                    </p>
+                  </Modal.Description>
+                </Modal.Content>
+              </Modal>
             </Modal.Description>
           </Modal.Content>
         </Modal>

@@ -191,7 +191,7 @@ class AddNewBook extends Component {
                         Would you like to go there now?
                       </h4>
                       <Link to="userlib">
-                        <Button>Go to BookShelf</Button>
+                        <Button>Go to Bookshelf</Button>
                       </Link>{" "}
                       <Link to="newbook">
                         <Button

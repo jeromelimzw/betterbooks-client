@@ -1,13 +1,4 @@
-import {
-  Container,
-  Header,
-  Table,
-  Breadcrumb,
-  Icon,
-  Grid,
-  Feed,
-  GridRow
-} from "semantic-ui-react";
+import { Container, Header, Breadcrumb, Feed } from "semantic-ui-react";
 import { NavLink as Link } from "react-router-dom";
 import ReviewItem from "./ReviewItem";
 

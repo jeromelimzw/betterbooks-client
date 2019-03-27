@@ -59,9 +59,9 @@ class UserCatalogue extends Component {
           <Breadcrumb size="big">
             <Breadcrumb.Section link>Home</Breadcrumb.Section>
             <Breadcrumb.Divider />
-            <Breadcrumb.Section link>Media Catalogue</Breadcrumb.Section>
+            <Breadcrumb.Section link>Bookshelf</Breadcrumb.Section>
           </Breadcrumb>
-          <Header>Media Catalogue</Header>
+          <Header>Your Bookshelf</Header>
           <Table striped>
             <Table.Header>
               <Table.Row>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu, Image, Header, Icon, Container } from "semantic-ui-react";
+import { Menu, Image, Header, Container } from "semantic-ui-react";
 import { NavLink as Link } from "react-router-dom";
 
 class NavBar extends Component {
@@ -11,20 +11,18 @@ class NavBar extends Component {
         <Container>
           <Menu.Item className="pointer">
             <Link to="/home">
-              <Image src="img/logo.png" alt="" width="50" />
+              <Image
+                src="https://png.pngtree.com/element_our/sm/20180329/sm_5abc881cb2505.png"
+                alt=""
+                width="50"
+              />
             </Link>
-            <Header>O.W.L Search</Header>
-            <small>...any book is just a hoot away</small>
+            <Header>
+              <span className="gray ml2 fw4 f2">better</span>
+              <span className="fw7 f2">books</span>
+            </Header>
+            <small>...when good is not good enough</small>
           </Menu.Item>
-
-          {/* <Menu.Item>
-            <Link to="/login">
-              <div className="f3 ph3 pv2 bg-light-red white br3  hover-bg-dark-red pointer">
-                <Icon name="sign-out" />
-                Sign Out
-              </div>
-            </Link>
-          </Menu.Item> */}
         </Container>
       </Menu>
     );

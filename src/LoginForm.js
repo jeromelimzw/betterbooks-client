@@ -11,7 +11,7 @@ class LoginForm extends Component {
   handleSubmit = async event => {
     event.preventDefault();
     try {
-      await fetch("http://localhost:8080/login", {
+      const res = await fetch("http://localhost:8080/login", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -22,6 +22,19 @@ class LoginForm extends Component {
           password: this.state.password
         })
       });
+      const status = await res.status;
+      if (status === 401) {
+        alert(
+          "I’m gonna give you to the count of 10 to get your ugly, yellow, no - good keister off my property before I pump your guts full of lead."
+        );
+      }
+      const body = await res.json();
+      window.localStorage.setItem("firstname", body.firstname);
+      window.localStorage.setItem("lastname", body.lastname);
+      window.localStorage.setItem("email", body.email);
+      window.localStorage.setItem("id", body._id);
+
+      alert(`Welcome back ${body.firstname} ${body.lastname}`);
     } catch (err) {
       console.log(err.message);
     }
