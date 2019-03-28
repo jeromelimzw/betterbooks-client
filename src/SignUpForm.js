@@ -64,11 +64,7 @@ class SignUpForm extends Component {
           </Form.Field>
           <Form.Field>
             <label>e-mail</label>
-            <input placeholder="e-mail" />
-          </Form.Field>
-          <Form.Field>
-            <label>Tel. No.</label>
-            <input placeholder="Tel. No." />
+            <input type="email" placeholder="e-mail" />
           </Form.Field>
           <Form.Field>
             <label>Password</label>

@@ -97,7 +97,7 @@ class DetailedUserInfo extends Component {
           </Form.Field>
           <Form.Field>
             <label>e-mail</label>
-            <input placeholder="e-mail" value={email} />
+            <input placeholder="e-mail" value={email} readOnly />
           </Form.Field>
           <Form.Field>
             <label>Old Password</label>

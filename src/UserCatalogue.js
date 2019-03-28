@@ -109,7 +109,7 @@ class UserCatalogue extends Component {
                         0,
                         80
                       )}...`}</Table.Cell>
-                      <Table.Cell>{a.authors}</Table.Cell>
+                      <Table.Cell>{a.authors.join(" , ")}</Table.Cell>
                       <Table.Cell>
                         {a.genres.length === 0 ? "General" : a.genres}
                       </Table.Cell>

@@ -8,6 +8,8 @@ import DetailedMediaInfo from "./DetailedMediaInfo";
 import DetailedUserInfo from "./DetailedUserInfo";
 import Dashboard from "./Dashboard";
 import CommunityPage from "./CommunityPage";
+import SplashScreen from "./SplashScreen";
+import AccessDenied from "./AccessDenied";
 
 const Routes = () => {
   return (
@@ -20,7 +22,8 @@ const Routes = () => {
       <Route path="/detailed/:handle" component={DetailedMediaInfo} />
       <Route path="/myinfo" component={DetailedUserInfo} />
       <Route path="/home" component={Dashboard} />
-      <Route path="/" component={LoginForm} />
+      <Route path="/accessdenied" component={AccessDenied} />
+      <Route path="/" component={SplashScreen} />
     </Switch>
   );
 };

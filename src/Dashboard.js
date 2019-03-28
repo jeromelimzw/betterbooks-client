@@ -1,5 +1,6 @@
 import React from "react";
 import { Header, Segment, Container, Breadcrumb } from "semantic-ui-react";
+import { NavLink as Link } from "react-router-dom";
 
 const Dashboard = () => (
   <Container className="mv7 animated fadeIn">
@@ -11,7 +12,9 @@ const Dashboard = () => (
     <Header> Dashboard</Header>
     <Segment>
       <Header as="h1">Welcome Back {localStorage.getItem("firstname")}!</Header>
-      <Header as="h3">You have 5 books on your bookshelf.</Header>
+      <Header as="h3">
+        You have 5 books on your <Link to="userlib">bookshelf</Link>.
+      </Header>
     </Segment>
     <Segment>
       <Header as="h1">Recently Added</Header>

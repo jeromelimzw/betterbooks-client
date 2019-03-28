@@ -1,9 +1,7 @@
 import { Container, Header, Breadcrumb, Feed, Grid } from "semantic-ui-react";
 import { NavLink as Link } from "react-router-dom";
 import ReviewItem from "./ReviewItem";
-
 import React, { Component } from "react";
-import "./global";
 
 class CommunityPage extends Component {
   constructor(props) {

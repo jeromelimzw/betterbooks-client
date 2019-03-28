@@ -5,7 +5,7 @@ import { NavLink as Link } from "react-router-dom";
 class LoginForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: "", password: "" };
+    this.state = { username: "", password: "", isAuthed: false };
   }
 
   handleSubmit = async event => {
@@ -26,6 +26,7 @@ class LoginForm extends Component {
       if (status === 401) {
         alert("access denied");
       }
+      this.setState({ isAuthed: true });
       const body = await res.json();
       localStorage.setItem("firstname", body.firstname);
       localStorage.setItem("lastname", body.lastname);
@@ -33,12 +34,8 @@ class LoginForm extends Component {
       localStorage.setItem("id", body._id);
       localStorage.setItem("username", body.username);
       localStorage.setItem("avatarimgURL", body.avatarimgURL);
-
-      alert(
-        `Welcome back ${localStorage.getItem(
-          "firstname"
-        )} ${localStorage.getItem("email")}`
-      );
+      alert(`Welcome back ${body.firstname}. Redirecting to home page...`);
+      this.props.history.push("/home");
     } catch (err) {
       console.log(err.message);
     }

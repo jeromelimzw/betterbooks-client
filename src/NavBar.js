@@ -10,7 +10,7 @@ class NavBar extends Component {
       <Menu borderless stackable className=" flex  justify-between" fixed="top">
         <Container>
           <Menu.Item className="pointer">
-            <Link to="/home">
+            <Link to="/">
               <Image
                 src="https://png.pngtree.com/element_our/sm/20180329/sm_5abc881cb2505.png"
                 alt=""
