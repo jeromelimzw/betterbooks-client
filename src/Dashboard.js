@@ -10,11 +10,8 @@ const Dashboard = () => (
     </Breadcrumb>
     <Header> Dashboard</Header>
     <Segment>
-      <Header as="h1">Welcome back Daniel!</Header>
-      <Header as="h3">You have read 5 books so far.</Header>
-      <Header as="h3">
-        You are 5 books away from your target of 10 books this year.
-      </Header>
+      <Header as="h1">Welcome Back {localStorage.getItem("firstname")}!</Header>
+      <Header as="h3">You have 5 books on your bookshelf.</Header>
     </Segment>
     <Segment>
       <Header as="h1">Recently Added</Header>

@@ -26,7 +26,7 @@ class UserCatalogue extends Component {
     const username = localStorage.getItem("username");
     try {
       const books = await fetch(
-        `http://localhost:8080/api/v1/users/${username}`
+        `https://betterbooks-server.herokuapp.com/api/v1/users/${username}`
       );
       const res = await books.json();
       console.log(res);
@@ -40,16 +40,19 @@ class UserCatalogue extends Component {
 
   async handleDeleteBook(id) {
     try {
-      await fetch(`http://localhost:8080/api/v1/books/${id}`, {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          username: localStorage.getItem("username")
-        })
-      });
+      await fetch(
+        `https://betterbooks-server.herokuapp.com/api/v1/books/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            username: localStorage.getItem("username")
+          })
+        }
+      );
       this.getBooksInfo();
     } catch (err) {
       console.log(err.message);

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Routes from "./Routes";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
+import dotenv from "dotenv";
+dotenv.config();
 
 class App extends Component {
   constructor(props) {
@@ -13,7 +15,6 @@ class App extends Component {
       <React.Fragment>
         <NavBar />
         <Routes />
-        <h1>Hello, {process.env.SERVER_API_URI} , space</h1>
         <Footer />
       </React.Fragment>
     );

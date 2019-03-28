@@ -18,7 +18,9 @@ class CommunityPage extends Component {
 
   async getBooksInfo() {
     try {
-      const books = await fetch("http://localhost:8080/api/v1/books");
+      const books = await fetch(
+        "https://betterbooks-server.herokuapp.com/api/v1/books"
+      );
       const res = await books.json();
       !res.length === 0
         ? this.setState({ books: [] })
@@ -42,19 +44,22 @@ class CommunityPage extends Component {
           <Header>Community</Header>
           <h3>Other Users Are Reading:</h3>
 
-          {books.map((a, index) => {
-            return (
-              <Link to={`/detailed/${a._id}`} key={index}>
-                <img
-                  src={a.imageUrl}
-                  alt="book cover"
-                  width="160"
-                  height="240"
-                  className="shadow-5 ma3 grow pointer"
-                />
-              </Link>
-            );
-          })}
+          {books
+            .reverse()
+            .slice(0, 6)
+            .map((a, index) => {
+              return (
+                <Link to={`/detailed/${a._id}`} key={index}>
+                  <img
+                    src={a.imageUrl}
+                    alt="book cover"
+                    width="160"
+                    height="240"
+                    className="shadow-5 ma3 grow pointer"
+                  />
+                </Link>
+              );
+            })}
 
           <h3>Recent Reviews:</h3>
 

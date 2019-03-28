@@ -39,7 +39,7 @@ class DetailedUserInfo extends Component {
   async handleSignOut() {
     try {
       await window.localStorage.clear();
-      await fetch("http://localhost:8080/logout");
+      await fetch("https://betterbooks-server.herokuapp.com/logout");
     } catch (err) {
       console.log(err.message);
     }

@@ -11,17 +11,20 @@ class LoginForm extends Component {
   handleSubmit = async event => {
     event.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/login", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          username: this.state.username,
-          password: this.state.password
-        })
-      });
+      const res = await fetch(
+        "https://betterbooks-server.herokuapp.com/login",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            username: this.state.username,
+            password: this.state.password
+          })
+        }
+      );
       const status = await res.status;
       if (status === 401) {
         alert(

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink as Link } from "react-router-dom";
 import ReviewItem from "./ReviewItem";
 import {
   Container,
@@ -27,7 +28,9 @@ class DetailedMediaInfo extends Component {
 
   async getBookInfo() {
     const bookId = this.props.match.url.substring(10);
-    const oneBook = await fetch(`http://localhost:8080/api/v1/books/${bookId}`);
+    const oneBook = await fetch(
+      `https://betterbooks-server.herokuapp.com/api/v1/books/${bookId}`
+    );
     const book = await oneBook.json();
     this.setState({ book });
   }
@@ -39,20 +42,41 @@ class DetailedMediaInfo extends Component {
   addReview = async () => {
     const bookId = this.props.match.url.substring(10);
     try {
-      await fetch(`http://localhost:8080/api/v1/books/${bookId}`, {
+      await fetch(
+        `https://betterbooks-server.herokuapp.com/api/v1/books/${bookId}`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            user: localStorage.getItem("id"),
+            review: this.state.review,
+            score: this.state.rating
+          })
+        }
+      );
+      this.getBookInfo();
+      window.location.reload();
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  handleAddToShelf = async () => {
+    try {
+      await fetch(`https://betterbooks-server.herokuapp.com/api/v1/books`, {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          user: localStorage.getItem("id"),
-          review: this.state.review,
-          score: this.state.rating
+          title: this.state.book.title,
+          username: localStorage.getItem("username")
         })
       });
-      this.getBookInfo();
-      window.location.reload();
     } catch (err) {
       console.log(err.message);
     }
@@ -213,6 +237,35 @@ class DetailedMediaInfo extends Component {
                   </Modal.Description>
                 </Modal.Content>
               </Modal>
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
+        <Modal
+          trigger={
+            <Button onClick={this.handleAddToShelf} color="google plus">
+              Add to Shelf
+            </Button>
+          }
+          dimmer="blurring"
+        >
+          {" "}
+          <Modal.Header>Adding Book to Shelf</Modal.Header>
+          <Modal.Content image>
+            <Modal.Description>
+              <h4>
+                The book has been added to your bookshelf
+                <br />
+                Would you like to go there now?
+              </h4>
+              <Link to="/userlib">
+                <Button>Go to Bookshelf</Button>
+              </Link>
+              <Button
+                onClick={() => window.location.reload()}
+                color="google plus"
+              >
+                Continue Browsing
+              </Button>
             </Modal.Description>
           </Modal.Content>
         </Modal>
