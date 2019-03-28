@@ -13,6 +13,7 @@ class App extends Component {
       <React.Fragment>
         <NavBar />
         <Routes />
+        <h1>Hello, {process.env.SERVER_API_URI} , space</h1>
         <Footer />
       </React.Fragment>
     );

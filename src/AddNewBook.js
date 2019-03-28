@@ -56,7 +56,7 @@ class AddNewBook extends Component {
 
   handleAddToShelf = async () => {
     try {
-      await fetch("http://localhost:8080/api/v1/books", {
+      await fetch(`http://localhost:8080/api/v1/books`, {
         method: "POST",
         headers: {
           Accept: "application/json",
