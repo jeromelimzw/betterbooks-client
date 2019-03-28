@@ -61,8 +61,9 @@ class CommunityPage extends Component {
           <Grid columns="5" divided>
             {books
               .filter(a => a.reviews.length !== 0)
-              .slice(0, 3)
               .reverse()
+              .slice(0, 3)
+
               .map((a, index) => (
                 <Grid.Row>
                   <Grid.Column>

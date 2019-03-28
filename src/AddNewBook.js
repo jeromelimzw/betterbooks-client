@@ -72,7 +72,8 @@ class AddNewBook extends Component {
           publisher: this.state.data[0].publisher,
           ISBN13: this.state.data[0].industryIdentifiers[0].identifier,
           description: this.state.data[0].description,
-          imageUrl: this.state.data[0].imageLinks.thumbnail
+          imageUrl: this.state.data[0].imageLinks.thumbnail,
+          username: localStorage.getItem("username")
         })
       });
     } catch (err) {

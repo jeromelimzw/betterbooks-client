@@ -5,7 +5,8 @@ import {
   Form,
   Image,
   Breadcrumb,
-  Icon
+  Icon,
+  Modal
 } from "semantic-ui-react";
 import { NavLink as Link } from "react-router-dom";
 
@@ -13,16 +14,11 @@ class DetailedUserInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userdata: [
-        {
-          username: "harry potter",
-          email: "daniel@radcliffe.com",
-          lastname: "Radcliffe",
-          firstname: "Daniel",
-          avatarimgURL:
-            "https://react.semantic-ui.com/images/avatar/large/matthew.png"
-        }
-      ]
+      username: "",
+      email: "",
+      lastname: "",
+      firstname: "",
+      avatarimgURL: ""
     };
   }
 
@@ -30,16 +26,27 @@ class DetailedUserInfo extends Component {
     this.getUserData();
   }
 
-  getUserData() {}
+  getUserData() {
+    this.setState({
+      username: localStorage.getItem("username"),
+      firstname: localStorage.getItem("firstname"),
+      lastname: localStorage.getItem("lastname"),
+      email: localStorage.getItem("email"),
+      avatarimgURL: localStorage.getItem("avatarimgURL")
+    });
+  }
+
+  async handleSignOut() {
+    try {
+      await window.localStorage.clear();
+      await fetch("http://localhost:8080/logout");
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
 
   render() {
-    const {
-      avatarimgURL,
-      firstname,
-      lastname,
-      username,
-      email
-    } = this.state.userdata[0];
+    const { avatarimgURL, firstname, lastname, username, email } = this.state;
     return (
       <Container className="mv7 animated fadeInUp">
         <Breadcrumb size="big">
@@ -56,12 +63,24 @@ class DetailedUserInfo extends Component {
               height="200"
               className="mb4 br-100 shadow-5 ba b--white bw2 pointer"
             />
-            <Icon
-              name="user delete"
-              value="delete user"
-              size="big"
-              className="pointer hover-red"
-            />
+            <Modal
+              trigger={
+                <Icon
+                  name="user delete"
+                  value="delete user"
+                  size="big"
+                  className="pointer hover-red"
+                />
+              }
+              dimmer="blurring"
+              size="small"
+            >
+              <Modal.Content>
+                Account deletion is not supported at this time.
+                <br />
+                Please try again at another time
+              </Modal.Content>
+            </Modal>
           </Form.Field>
 
           <Form.Field>
@@ -89,13 +108,21 @@ class DetailedUserInfo extends Component {
             <input placeholder="enter new password" type="password" />
           </Form.Field>
           <Form.Field className="flex justify-around">
-            <div className="f3 ph3 pv2 bg-blue white br3 shadow-5 hover-bg-dark-blue pointer">
-              <Icon name="pencil" />
-              Update
-            </div>
+            <Modal
+              trigger={
+                <div className="f3 ph3 pv2 bg-blue white br3 shadow-5 hover-bg-dark-blue pointer">
+                  <Icon name="pencil" />
+                  Update
+                </div>
+              }
+              dimmer="blurring"
+              size="tiny"
+            >
+              <Modal.Content>Your details have been updated.</Modal.Content>
+            </Modal>
             <Link to="/login">
               <div className="f3 ph3 pv2 bg-light-red white br3 shadow-5 hover-bg-dark-red pointer">
-                <Icon name="sign-out" />
+                <Icon name="sign-out" onClick={this.handleSignOut} />
                 Sign Out
               </div>
             </Link>

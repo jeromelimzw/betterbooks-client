@@ -46,7 +46,7 @@ class DetailedMediaInfo extends Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          user: "5c9aea0f952f7e1624fccc57",
+          user: localStorage.getItem("id"),
           review: this.state.review,
           score: this.state.rating
         })

@@ -29,12 +29,18 @@ class LoginForm extends Component {
         );
       }
       const body = await res.json();
-      window.localStorage.setItem("firstname", body.firstname);
-      window.localStorage.setItem("lastname", body.lastname);
-      window.localStorage.setItem("email", body.email);
-      window.localStorage.setItem("id", body._id);
+      localStorage.setItem("firstname", body.firstname);
+      localStorage.setItem("lastname", body.lastname);
+      localStorage.setItem("email", body.email);
+      localStorage.setItem("id", body._id);
+      localStorage.setItem("username", body.username);
+      localStorage.setItem("avatarimgURL", body.avatarimgURL);
 
-      alert(`Welcome back ${body.firstname} ${body.lastname}`);
+      alert(
+        `Welcome back ${localStorage.getItem(
+          "firstname"
+        )} ${localStorage.getItem("email")}`
+      );
     } catch (err) {
       console.log(err.message);
     }
