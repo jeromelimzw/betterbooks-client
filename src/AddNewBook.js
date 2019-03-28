@@ -56,7 +56,7 @@ class AddNewBook extends Component {
 
   handleAddToShelf = async () => {
     try {
-      await fetch(`https://betterbooks-server.herokuapp.com/api/v1/books`, {
+      await fetch(`${global.server}api/v1/books`, {
         method: "POST",
         headers: {
           Accept: "application/json",

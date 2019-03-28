@@ -28,9 +28,7 @@ class DetailedMediaInfo extends Component {
 
   async getBookInfo() {
     const bookId = this.props.match.url.substring(10);
-    const oneBook = await fetch(
-      `https://betterbooks-server.herokuapp.com/api/v1/books/${bookId}`
-    );
+    const oneBook = await fetch(`${global.server}api/v1/books/${bookId}`);
     const book = await oneBook.json();
     this.setState({ book });
   }
@@ -42,21 +40,18 @@ class DetailedMediaInfo extends Component {
   addReview = async () => {
     const bookId = this.props.match.url.substring(10);
     try {
-      await fetch(
-        `https://betterbooks-server.herokuapp.com/api/v1/books/${bookId}`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            user: localStorage.getItem("id"),
-            review: this.state.review,
-            score: this.state.rating
-          })
-        }
-      );
+      await fetch(`${global.server}api/v1/books/${bookId}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          user: localStorage.getItem("id"),
+          review: this.state.review,
+          score: this.state.rating
+        })
+      });
       this.getBookInfo();
       window.location.reload();
     } catch (err) {
@@ -66,7 +61,7 @@ class DetailedMediaInfo extends Component {
 
   handleAddToShelf = async () => {
     try {
-      await fetch(`https://betterbooks-server.herokuapp.com/api/v1/books`, {
+      await fetch(`${global.server}api/v1/books`, {
         method: "POST",
         headers: {
           Accept: "application/json",

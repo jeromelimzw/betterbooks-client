@@ -7,6 +7,7 @@ import {
   Grid
 } from "semantic-ui-react";
 import { NavLink as Link } from "react-router-dom";
+import "./global";
 
 import React, { Component } from "react";
 
@@ -25,9 +26,7 @@ class UserCatalogue extends Component {
   async getBooksInfo() {
     const username = localStorage.getItem("username");
     try {
-      const books = await fetch(
-        `https://betterbooks-server.herokuapp.com/api/v1/users/${username}`
-      );
+      const books = await fetch(`${global.server}api/v1/users/${username}`);
       const res = await books.json();
       console.log(res);
       !res.length === 0
@@ -40,19 +39,16 @@ class UserCatalogue extends Component {
 
   async handleDeleteBook(id) {
     try {
-      await fetch(
-        `https://betterbooks-server.herokuapp.com/api/v1/books/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            username: localStorage.getItem("username")
-          })
-        }
-      );
+      await fetch(`${global.server}api/v1/books/${id}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: localStorage.getItem("username")
+        })
+      });
       this.getBooksInfo();
     } catch (err) {
       console.log(err.message);

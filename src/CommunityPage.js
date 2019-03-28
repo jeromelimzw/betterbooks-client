@@ -3,6 +3,7 @@ import { NavLink as Link } from "react-router-dom";
 import ReviewItem from "./ReviewItem";
 
 import React, { Component } from "react";
+import "./global";
 
 class CommunityPage extends Component {
   constructor(props) {
@@ -18,9 +19,7 @@ class CommunityPage extends Component {
 
   async getBooksInfo() {
     try {
-      const books = await fetch(
-        "https://betterbooks-server.herokuapp.com/api/v1/books"
-      );
+      const books = await fetch(`${global.server}api/v1/books`);
       const res = await books.json();
       !res.length === 0
         ? this.setState({ books: [] })

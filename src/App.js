@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import Routes from "./Routes";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import dotenv from "dotenv";
-dotenv.config();
 
 class App extends Component {
   constructor(props) {
