@@ -11,20 +11,39 @@ import CommunityPage from "./CommunityPage";
 import SplashScreen from "./SplashScreen";
 import AccessDenied from "./AccessDenied";
 
+const isAuthorized = !!localStorage.getItem("username");
+
 const Routes = () => {
   return (
-    <Switch>
-      <Route path="/login" component={LoginForm} />
-      <Route path="/community" component={CommunityPage} />
-      <Route path="/register" component={SignupForm} />
-      <Route path="/newbook" component={AddNewBook} />
-      <Route path="/userlib" component={UserCatalogue} />
-      <Route path="/detailed/:handle" component={DetailedMediaInfo} />
-      <Route path="/myinfo" component={DetailedUserInfo} />
-      <Route path="/home" component={Dashboard} />
-      <Route path="/accessdenied" component={AccessDenied} />
-      <Route path="/" component={SplashScreen} />
-    </Switch>
+    <React.Fragment>
+      <Switch>
+        <Route path="/login" component={LoginForm} />
+        <Route path="/community" component={CommunityPage} />
+        <Route path="/register" component={SignupForm} />
+        <Route
+          path="/newbook"
+          component={isAuthorized ? AddNewBook : AccessDenied}
+        />
+        <Route
+          path="/userlib"
+          component={isAuthorized ? UserCatalogue : AccessDenied}
+        />
+        <Route
+          path="/detailed/:handle"
+          component={isAuthorized ? DetailedMediaInfo : AccessDenied}
+        />
+        <Route
+          path="/myinfo"
+          component={isAuthorized ? DetailedUserInfo : AccessDenied}
+        />
+        <Route
+          path="/home"
+          component={isAuthorized ? Dashboard : AccessDenied}
+        />
+
+        <Route path="/" component={SplashScreen} />
+      </Switch>
+    </React.Fragment>
   );
 };
 

@@ -26,7 +26,9 @@ class UserCatalogue extends Component {
   async getBooksInfo() {
     const username = localStorage.getItem("username");
     try {
-      const books = await fetch(`${global.server}api/v1/users/${username}`);
+      const books = await fetch(`${global.server}api/v1/users/${username}`, {
+        credentials: "include"
+      });
       const res = await books.json();
       !res.length === 0
         ? this.setState({ books: [] })
@@ -39,6 +41,7 @@ class UserCatalogue extends Component {
   async handleDeleteBook(id) {
     try {
       await fetch(`${global.server}api/v1/books/${id}`, {
+        credentials: "include",
         method: "DELETE",
         headers: {
           Accept: "application/json",

@@ -40,6 +40,7 @@ class DetailedUserInfo extends Component {
     try {
       await window.localStorage.clear();
       await fetch(`${global.server}logout`);
+      window.location.reload();
     } catch (err) {
       console.log(err.message);
     }
@@ -121,8 +122,11 @@ class DetailedUserInfo extends Component {
               <Modal.Content>Your details have been updated.</Modal.Content>
             </Modal>
             <Link to="/login">
-              <div className="f3 ph3 pv2 bg-light-red white br3 shadow-5 hover-bg-dark-red pointer">
-                <Icon name="sign-out" onClick={this.handleSignOut} />
+              <div
+                className="f3 ph3 pv2 bg-light-red white br3 shadow-5 hover-bg-dark-red pointer"
+                onClick={this.handleSignOut}
+              >
+                <Icon name="sign-out" />
                 Sign Out
               </div>
             </Link>

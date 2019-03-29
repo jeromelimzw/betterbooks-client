@@ -3,5 +3,3 @@ if (process.env.NODE_ENV === "production") {
 } else {
   global.server = "http://localhost:8080/";
 }
-
-global.isAuthorized = false;

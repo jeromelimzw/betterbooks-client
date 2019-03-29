@@ -17,7 +17,9 @@ class CommunityPage extends Component {
 
   async getBooksInfo() {
     try {
-      const books = await fetch(`${global.server}api/v1/books`);
+      const books = await fetch(`${global.server}api/v1/books`, {
+        credentials: "include"
+      });
       const res = await books.json();
       !res.length === 0
         ? this.setState({ books: [] })

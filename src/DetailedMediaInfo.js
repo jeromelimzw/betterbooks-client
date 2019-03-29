@@ -28,7 +28,9 @@ class DetailedMediaInfo extends Component {
 
   async getBookInfo() {
     const bookId = this.props.match.url.substring(10);
-    const oneBook = await fetch(`${global.server}api/v1/books/${bookId}`);
+    const oneBook = await fetch(`${global.server}api/v1/books/${bookId}`, {
+      credentials: "include"
+    });
     const book = await oneBook.json();
     this.setState({ book });
   }
@@ -41,6 +43,7 @@ class DetailedMediaInfo extends Component {
     const bookId = this.props.match.url.substring(10);
     try {
       await fetch(`${global.server}api/v1/books/${bookId}`, {
+        credentials: "include",
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -53,7 +56,7 @@ class DetailedMediaInfo extends Component {
         })
       });
       this.getBookInfo();
-      window.location.reload();
+      //   window.location.reload();
     } catch (err) {
       console.log(err.message);
     }
@@ -62,6 +65,7 @@ class DetailedMediaInfo extends Component {
   handleAddToShelf = async () => {
     try {
       await fetch(`${global.server}api/v1/books`, {
+        credentials: "include",
         method: "POST",
         headers: {
           Accept: "application/json",

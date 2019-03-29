@@ -28,7 +28,10 @@ class AddNewBook extends Component {
         `https://www.googleapis.com/books/v1/volumes?q=isbn:${this.state.isbn.replace(
           /-/g,
           ""
-        )}`
+        )}`,
+        {
+          credentials: "include"
+        }
       );
       const res = await book.json();
       !res.totalItems
@@ -58,6 +61,7 @@ class AddNewBook extends Component {
     try {
       await fetch(`${global.server}api/v1/books`, {
         method: "POST",
+        credentials: "include",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json"
