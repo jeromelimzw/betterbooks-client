@@ -23,6 +23,9 @@ class NavBar extends Component {
             </Header>
             <small>...when good is not good enough</small>
           </Menu.Item>
+          <small className="white">{`current server is: ${
+            global.server
+          } `}</small>
         </Container>
       </Menu>
     );
