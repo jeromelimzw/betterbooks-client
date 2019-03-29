@@ -28,7 +28,6 @@ class UserCatalogue extends Component {
     try {
       const books = await fetch(`${global.server}api/v1/users/${username}`);
       const res = await books.json();
-      console.log(res);
       !res.length === 0
         ? this.setState({ books: [] })
         : this.setState({ books: res.books });
@@ -78,9 +77,11 @@ class UserCatalogue extends Component {
                 <Table.HeaderCell />
               </Table.Row>
             </Table.Header>
-            <Table.Body unstackable>
+            <Table.Body unstackable="true">
               {books.length === 0 ? (
-                <h3>Your shelf is empty.</h3>
+                <Table.Row>
+                  <Table.Cell>Your shelf is empty.</Table.Cell>
+                </Table.Row>
               ) : (
                 books.map((a, index) => {
                   return (

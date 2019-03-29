@@ -1,6 +1,7 @@
-global.server =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:8080/"
-    : "https://betterbooks-server.herokuapp.com/";
+if (process.env.NODE_ENV === "production") {
+  global.server = "https://betterbooks-server.herokuapp.com/";
+} else {
+  global.server = "http://localhost:8080/";
+}
 
 global.isAuthorized = false;
