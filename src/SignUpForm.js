@@ -96,6 +96,19 @@ class SignUpForm extends Component {
   };
 
   render() {
+    const {
+      handleAvatar,
+      handleEmail,
+      handleFirstName,
+      handleLastName,
+      handlePassword1,
+      handlePassword2,
+      handleSubmit,
+      handleUserName,
+      togglePasswordView
+    } = this;
+    const { showPassword, avatarimgURL } = this.state;
+
     return (
       <Container className="mv7 animated fadeIn">
         <Breadcrumb size="big">
@@ -107,34 +120,30 @@ class SignUpForm extends Component {
 
         <Form
           className=" shadow-5 pa4 ba b--transparent bg-moon-gray bw2"
-          onSubmit={this.handleSubmit}
+          onSubmit={handleSubmit}
         >
           <Form.Field>
             <label>First Name</label>
-            <input placeholder="First Name" onChange={this.handleFirstName} />
+            <input placeholder="First Name" onChange={handleFirstName} />
           </Form.Field>
           <Form.Field>
             <label>Last Name</label>
-            <input placeholder="Last Name" onChange={this.handleLastName} />
+            <input placeholder="Last Name" onChange={handleLastName} />
           </Form.Field>
           <Form.Field>
             <label>User Name</label>
-            <input placeholder="User Name" onChange={this.handleUserName} />
+            <input placeholder="User Name" onChange={handleUserName} />
           </Form.Field>
           <Form.Field>
             <label>e-mail</label>
-            <input
-              type="email"
-              placeholder="e-mail"
-              onChange={this.handleEmail}
-            />
+            <input type="email" placeholder="e-mail" onChange={handleEmail} />
           </Form.Field>
           <Form.Field>
             <label>Password</label>
             <input
-              type={this.state.showPassword ? "text" : "password"}
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
-              onChange={this.handlePassword1}
+              onChange={handlePassword1}
             />
           </Form.Field>
           <Form.Field>
@@ -142,26 +151,24 @@ class SignUpForm extends Component {
               Enter Password Again{"     "}
               <span>
                 <Icon
-                  name={this.state.showPassword ? "eye " : "eye slash"}
-                  onClick={this.togglePasswordView}
+                  name={showPassword ? "eye " : "eye slash"}
+                  onClick={togglePasswordView}
                   size="large"
-                  className={`pointer ${
-                    this.state.showPassword ? undefined : "gray"
-                  }`}
+                  className={`pointer ${showPassword ? undefined : "gray"}`}
                 />
               </span>
             </label>
             <input
-              type={this.state.showPassword ? "text" : "password"}
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
-              onChange={this.handlePassword2}
+              onChange={handlePassword2}
             />
           </Form.Field>
           <Form.Field>
             <label>Avatar</label>
-            {this.state.avatarimgURL !== "" ? (
+            {avatarimgURL !== "" ? (
               <img
-                src={this.state.avatarimgURL}
+                src={avatarimgURL}
                 width="100"
                 alt="avatar"
                 className="br-100 ma1 b--gold bw2 ba shadow-5"
@@ -188,13 +195,13 @@ class SignUpForm extends Component {
                     width="100"
                     alt="avatar"
                     className="br-100 ma1 pointer grow shadow-5 animated fadeIn"
-                    onClick={this.handleAvatar}
+                    onClick={handleAvatar}
                   />
                 ))}
                 <h3>Selected Avatar:</h3>
-                {this.state.avatarimgURL !== "" ? (
+                {avatarimgURL !== "" ? (
                   <img
-                    src={this.state.avatarimgURL}
+                    src={avatarimgURL}
                     width="100"
                     alt="avatar"
                     className="br-100 ma1 b--gold bw2 ba shadow-5"

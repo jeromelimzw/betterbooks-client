@@ -73,6 +73,8 @@ class SearchBooks extends Component {
   };
 
   render() {
+    const { handleSearchField, handleSelector, handleSubmit } = this;
+    const { books } = this.state;
     return (
       <Container className="mv7 animated fadeIn">
         <Breadcrumb size="big">
@@ -81,18 +83,18 @@ class SearchBooks extends Component {
           <Breadcrumb.Section link>Add New Book</Breadcrumb.Section>
         </Breadcrumb>
         <Header>Search for Books</Header>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <Input
             placeholder="Search..."
             fluid
-            onChange={this.handleSearchField}
+            onChange={handleSearchField}
             className="w-80"
           >
             <input />
             <Select
               options={options}
               defaultValue="title:"
-              onChange={this.handleSelector}
+              onChange={handleSelector}
             />
             <Button type="submit">
               <Icon name="search" />
@@ -111,12 +113,12 @@ class SearchBooks extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body unstackable="true">
-            {this.state.books.length === 0 ? (
+            {books.length === 0 ? (
               <Table.Row>
                 <Table.Cell>No search results matching query</Table.Cell>
               </Table.Row>
             ) : (
-              this.state.books
+              books
                 .filter(a => a.volumeInfo.industryIdentifiers)
                 .map((a, index) => {
                   return (

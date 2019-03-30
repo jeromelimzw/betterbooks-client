@@ -26,14 +26,14 @@ class DetailedMediaInfo extends Component {
     await this.getBookInfo();
   }
 
-  async getBookInfo() {
+  getBookInfo = async () => {
     const bookId = this.props.match.url.substring(10);
     const oneBook = await fetch(`${global.server}api/v1/books/${bookId}`, {
       credentials: "include"
     });
     const book = await oneBook.json();
     this.setState({ book });
-  }
+  };
 
   handleRate = (e, { rating, maxRating }) =>
     this.setState({ rating, maxRating });
@@ -95,6 +95,12 @@ class DetailedMediaInfo extends Component {
       imageUrl,
       reviews
     } = this.state.book;
+    const {
+      handleAddToShelf,
+      handleChangeReview,
+      handleRate,
+      addReview
+    } = this;
     return (
       <Container className="mv7 scrolling animated fadeInUp">
         <Breadcrumb size="big">
@@ -209,11 +215,7 @@ class DetailedMediaInfo extends Component {
                   <Form>
                     <FormField>
                       <label>Score:</label>
-                      <Rating
-                        icon="star"
-                        maxRating={10}
-                        onRate={this.handleRate}
-                      />
+                      <Rating icon="star" maxRating={10} onRate={handleRate} />
                     </FormField>
                     <FormField>
                       <label>Review:</label>
@@ -221,15 +223,13 @@ class DetailedMediaInfo extends Component {
                         placeholder="write your review here"
                         cols="70"
                         rows="3"
-                        onChange={this.handleChangeReview}
+                        onChange={handleChangeReview}
                       />
                     </FormField>
                   </Form>
                   <br />
                   <Modal
-                    trigger={
-                      <Button onClick={this.addReview}>Submit Review</Button>
-                    }
+                    trigger={<Button onClick={addReview}>Submit Review</Button>}
                     dimmer="blurring"
                     size="tiny"
                   >
@@ -247,7 +247,7 @@ class DetailedMediaInfo extends Component {
             </Modal>
             <Modal
               trigger={
-                <Button onClick={this.handleAddToShelf} color="google plus">
+                <Button onClick={handleAddToShelf} color="google plus">
                   Add to Shelf
                 </Button>
               }

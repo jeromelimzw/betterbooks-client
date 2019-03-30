@@ -38,7 +38,7 @@ class UserCatalogue extends Component {
     }
   }
 
-  async handleDeleteBook(id) {
+  handleDeleteBook = async id => {
     try {
       await fetch(`${global.server}api/v1/books/${id}`, {
         credentials: "include",
@@ -55,10 +55,11 @@ class UserCatalogue extends Component {
     } catch (err) {
       console.log(err.message);
     }
-  }
+  };
 
   render() {
     const { books } = this.state;
+    const { handleDeleteBook } = this;
     return (
       <React.Fragment>
         <Container className="mv7 animated fadeInUp">
@@ -94,7 +95,7 @@ class UserCatalogue extends Component {
                           name="delete"
                           color="grey"
                           className="pointer grow-large hover-black"
-                          onClick={() => this.handleDeleteBook(a._id)}
+                          onClick={() => handleDeleteBook(a._id)}
                         />
                       </Table.Cell>
                       <Table.Cell>

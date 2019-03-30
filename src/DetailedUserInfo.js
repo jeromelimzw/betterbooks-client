@@ -48,6 +48,7 @@ class DetailedUserInfo extends Component {
 
   render() {
     const { avatarimgURL, firstname, lastname, username, email } = this.state;
+    const { handleSignOut } = this;
     return (
       <Container className="mv7 animated fadeInUp">
         <Breadcrumb size="big">
@@ -124,7 +125,7 @@ class DetailedUserInfo extends Component {
             <Link to="/login">
               <div
                 className="f3 ph3 pv2 bg-light-red white br3 shadow-5 hover-bg-dark-red pointer"
-                onClick={this.handleSignOut}
+                onClick={handleSignOut}
               >
                 <Icon name="sign-out" />
                 Sign Out
