@@ -35,7 +35,7 @@ class LoginForm extends Component {
       localStorage.setItem("id", body._id);
       localStorage.setItem("username", body.username);
       localStorage.setItem("avatarimgURL", body.avatarimgURL);
-      alert(`Welcome back ${body.firstname}. Redirecting to home page...`);
+      alert(`Welcome back ${body.firstname}. \nRedirecting to home page...`);
       this.props.history.push("/home");
       window.location.reload();
     } catch (err) {

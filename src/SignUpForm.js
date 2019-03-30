@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import avatarIMG from "./utils/avatarIMG";
 import {
   Button,
   Checkbox,
@@ -6,15 +7,94 @@ import {
   Header,
   Container,
   Breadcrumb,
-  Modal
+  Modal,
+  Icon
 } from "semantic-ui-react";
-import { NavLink as Link } from "react-router-dom";
 
 class SignUpForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      firstname: "",
+      lastname: "",
+      username: "",
+      avatarimgURL: "",
+      email: "",
+      password1: "",
+      password2: "",
+      showPassword: false
+    };
   }
+
+  handleAvatar = event => {
+    this.setState({ avatarimgURL: event.target.src });
+  };
+
+  handleFirstName = event => {
+    this.setState({ firstname: event.target.value });
+  };
+  handleLastName = event => {
+    this.setState({ lastname: event.target.value });
+  };
+  handleUserName = event => {
+    this.setState({ username: event.target.value });
+  };
+  handleEmail = event => {
+    this.setState({ email: event.target.value });
+  };
+  handlePassword1 = event => {
+    this.setState({ password1: event.target.value });
+  };
+  handlePassword2 = event => {
+    this.setState({ password2: event.target.value });
+  };
+  togglePasswordView = event => {
+    this.setState({ showPassword: !this.state.showPassword });
+  };
+
+  handleSubmit = async event => {
+    event.preventDefault();
+    // eslint-disable-next-line no-unused-expressions
+    if (
+      this.state.password1 !== this.state.password2 ||
+      this.state.password1 === ""
+    ) {
+      alert("passwords do not match");
+    } else {
+      try {
+        const res = await fetch(`${global.server}register`, {
+          credentials: "include",
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            firstname: this.state.firstname,
+            lastname: this.state.lastname,
+            username: this.state.username,
+            email: this.state.email,
+            password: this.state.password1,
+            avatarimgURL: this.state.avatarimgURL
+          })
+        });
+        const { status } = await res;
+        if (status === 500) {
+          alert(`account not created\nplease ensure all fields are filled`);
+        } else if (status === 401) {
+          alert("chosen username has been taken");
+        } else {
+          alert(
+            `Welcome ${this.state.firstname}! \nRedirecting to login page...`
+          );
+          this.props.history.push("/login");
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+  };
+
   render() {
     return (
       <Container className="mv7 animated fadeIn">
@@ -24,65 +104,115 @@ class SignUpForm extends Component {
           <Breadcrumb.Section link>Sign Up</Breadcrumb.Section>
         </Breadcrumb>
         <Header>Sign Up</Header>
-        <Form className=" shadow-5 pa4 ba b--transparent bg-moon-gray bw2">
-          <Form.Field>
-            <label>
-              Referral Token{"  "}
-              <Modal
-                trigger={
-                  <span href="#" className="blue hover-dark-blue pointer">
-                    (?)
-                  </span>
-                }
-                dimmer="blurring"
-                closeIcon
-              >
-                <Modal.Header>Referral Token</Modal.Header>
-                <Modal.Content image>
-                  <Modal.Description>
-                    <Header>Why is a referral token required?</Header>
-                    <p>
-                      Due to overwhelming interest, as well as to maintain the
-                      quality of the book-reading community, <br />a referral
-                      code from an existing member is required.
-                      <br /> We apologise for the inconvenience caused and hope
-                      for your understanding.
-                    </p>
-                  </Modal.Description>
-                </Modal.Content>
-              </Modal>
-            </label>
-            <input placeholder="Referral Token" />
-          </Form.Field>
+
+        <Form
+          className=" shadow-5 pa4 ba b--transparent bg-moon-gray bw2"
+          onSubmit={this.handleSubmit}
+        >
           <Form.Field>
             <label>First Name</label>
-            <input placeholder="First Name" />
+            <input placeholder="First Name" onChange={this.handleFirstName} />
           </Form.Field>
           <Form.Field>
             <label>Last Name</label>
-            <input placeholder="Last Name" />
+            <input placeholder="Last Name" onChange={this.handleLastName} />
+          </Form.Field>
+          <Form.Field>
+            <label>User Name</label>
+            <input placeholder="User Name" onChange={this.handleUserName} />
           </Form.Field>
           <Form.Field>
             <label>e-mail</label>
-            <input type="email" placeholder="e-mail" />
+            <input
+              type="email"
+              placeholder="e-mail"
+              onChange={this.handleEmail}
+            />
           </Form.Field>
           <Form.Field>
             <label>Password</label>
-            <input type="password" placeholder="Password" />
+            <input
+              type={this.state.showPassword ? "text" : "password"}
+              placeholder="Password"
+              onChange={this.handlePassword1}
+            />
           </Form.Field>
           <Form.Field>
-            <label>Enter Password Again</label>
-            <input type="password" placeholder="Password" />
+            <label>
+              Enter Password Again{"     "}
+              <span>
+                <Icon
+                  name={this.state.showPassword ? "eye " : "eye slash"}
+                  onClick={this.togglePasswordView}
+                  size="large"
+                  className={`pointer ${
+                    this.state.showPassword ? undefined : "gray"
+                  }`}
+                />
+              </span>
+            </label>
+            <input
+              type={this.state.showPassword ? "text" : "password"}
+              placeholder="Password"
+              onChange={this.handlePassword2}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Avatar</label>
+            {this.state.avatarimgURL !== "" ? (
+              <img
+                src={this.state.avatarimgURL}
+                width="100"
+                alt="avatar"
+                className="br-100 ma1 b--gold bw2 ba shadow-5"
+              />
+            ) : (
+              <h5 className="gray">No avatar selected ...</h5>
+            )}
+
+            <Modal
+              trigger={
+                <p className="ph3 pv2 ba br2 b--transparent bg-white pointer">
+                  Select Avatar
+                </p>
+              }
+              dimmer="blurring"
+              closeIcon
+            >
+              <Modal.Content>
+                <h3>Pick An Avatar:</h3>
+                {avatarIMG.map((a, index) => (
+                  <img
+                    key={index}
+                    src={a}
+                    width="100"
+                    alt="avatar"
+                    className="br-100 ma1 pointer grow shadow-5 animated fadeIn"
+                    onClick={this.handleAvatar}
+                  />
+                ))}
+                <h3>Selected Avatar:</h3>
+                {this.state.avatarimgURL !== "" ? (
+                  <img
+                    src={this.state.avatarimgURL}
+                    width="100"
+                    alt="avatar"
+                    className="br-100 ma1 b--gold bw2 ba shadow-5"
+                  />
+                ) : (
+                  undefined
+                )}
+              </Modal.Content>
+            </Modal>
           </Form.Field>
 
           <Form.Field>
-            <Checkbox label="I agree to the Terms and Conditions" />
+            <Checkbox label="I agree to the Terms and Conditions" checked />
           </Form.Field>
-          <Link to="login">
-            <Button type="submit" color="google plus">
-              Submit
-            </Button>
-          </Link>
+
+          <Button type="submit" color="google plus">
+            Submit
+          </Button>
         </Form>
       </Container>
     );

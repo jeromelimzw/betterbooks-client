@@ -8,7 +8,7 @@ class NavBar extends Component {
     this.state = {
       navinfo: [
         { link: "/userlib", icon: "book", label: "Your Books" },
-        { link: "/newbook", icon: "plus", label: "Add Book" },
+        { link: "/searchbooks", icon: "plus", label: "Add Book" },
         { link: "/community", icon: "users", label: "Community" },
         { link: "/myinfo", icon: "user", label: "Account" }
       ]

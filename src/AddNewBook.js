@@ -17,45 +17,32 @@ class AddNewBook extends Component {
     super();
     this.state = {
       data: [],
-      isbn: "",
-      error: undefined
+      isbn: ""
     };
+  }
+
+  async componentDidMount() {
+    await this.getBookInfo();
   }
 
   async getBookInfo() {
     try {
       const book = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=isbn:${this.state.isbn.replace(
-          /-/g,
-          ""
-        )}`,
+        `https://www.googleapis.com/books/v1/volumes?q=isbn:${
+          this.props.match.params.handle
+        }`,
         {
           credentials: "include"
         }
       );
       const res = await book.json();
-      !res.totalItems
-        ? this.setState({ error: "invalid ISBN", data: [] })
-        : this.state.isbn === ""
-        ? this.setState({ error: "ISBN is required", data: [] })
-        : this.setState({
-            data: [res.items[0].volumeInfo],
-            error: undefined
-          });
+      this.setState({
+        data: [res.items[0].volumeInfo]
+      });
     } catch (error) {
       console.log(error.message);
     }
   }
-
-  handleSubmit = event => {
-    this.setState({ data: [] });
-    this.getBookInfo();
-    event.preventDefault();
-  };
-
-  handleChange = event => {
-    this.setState({ isbn: event.target.value });
-  };
 
   handleAddToShelf = async () => {
     try {
@@ -86,23 +73,22 @@ class AddNewBook extends Component {
   };
 
   render() {
+    const { data } = this.state;
+    const { handleSubmit, handleAddToShelf } = this;
+    const { handle } = this.props.match.params;
     return (
       <Container className="mv7 animated fadeIn">
         <Breadcrumb size="big">
           <Breadcrumb.Section link>Home</Breadcrumb.Section>
-          <Breadcrumb.Divider />
-          <Breadcrumb.Section link>Admin</Breadcrumb.Section>
-          <Breadcrumb.Divider />
-          <Breadcrumb.Section link>Media Catalogue</Breadcrumb.Section>
           <Breadcrumb.Divider />
           <Breadcrumb.Section link>Add New Book</Breadcrumb.Section>
         </Breadcrumb>
         <Header>Add New Book</Header>
         <Form
           className=" shadow-5 pa4 ba b--transparent bg-moon-gray bw2 "
-          onSubmit={this.handleSubmit}
+          onSubmit={handleSubmit}
         >
-          {this.state.data.map((a, index) => (
+          {data.map((a, index) => (
             <React.Fragment key={index}>
               <Form.Field>
                 <Image
@@ -121,7 +107,10 @@ class AddNewBook extends Component {
               </Form.Field>
               <Form.Field>
                 <label>Author(s)</label>
-                <input value={a.authors.join("  ,  ")} readOnly />
+                <input
+                  value={!a.authors ? "" : a.authors.join("  ,  ")}
+                  readOnly
+                />
               </Form.Field>
               <Form.Field>
                 <label>Description</label>
@@ -160,57 +149,51 @@ class AddNewBook extends Component {
                   readOnly
                 />
               </Form.Field>
+              <Form.Field>
+                <label>ISBN</label>
+                <input value={handle} />
+              </Form.Field>
             </React.Fragment>
           ))}
 
-          <Form.Field>
-            <label>ISBN Search</label>
-            <input onChange={this.handleChange} />
-            <Button type="submit" color="google plus">
-              ISBN Search
-            </Button>
-            {this.state.error && (
-              <span className="fw7 red bg-black ph3 pv2 br2">
-                {this.state.error}
-              </span>
-            )}
-          </Form.Field>
-          {this.state.data.length === 1 ? (
+          {localStorage.getItem("username") ? (
             <Form.Field className="flex justify-around">
-              <Link to="/newbook">
-                <Modal
-                  trigger={
-                    <Button onClick={this.handleAddToShelf} color="google plus">
-                      Add to Shelf
-                    </Button>
-                  }
-                  dimmer="blurring"
-                >
-                  {" "}
-                  <Modal.Header>Adding Book to Shelf</Modal.Header>
-                  <Modal.Content image>
-                    <Modal.Description>
-                      <h4>
-                        The book has been added to your bookshelf
-                        <br />
-                        Would you like to go there now?
-                      </h4>
-                      <Link to="userlib">
-                        <Button>Go to Bookshelf</Button>
-                      </Link>{" "}
-                      <Link to="newbook">
-                        <Button
-                          onClick={() => window.location.reload()}
-                          color="google plus"
-                        >
-                          Add Another Book
-                        </Button>
-                      </Link>
-                    </Modal.Description>
-                  </Modal.Content>
-                </Modal>
-              </Link>
+              <Modal
+                trigger={
+                  <Button onClick={handleAddToShelf} color="google plus">
+                    Add to Shelf
+                  </Button>
+                }
+                dimmer="blurring"
+              >
+                {" "}
+                <Modal.Header>Adding Book to Shelf</Modal.Header>
+                <Modal.Content image>
+                  <Modal.Description>
+                    <h4>
+                      The book has been added to your bookshelf
+                      <br />
+                      Would you like to go there now?
+                    </h4>
+                    <Link to="/userlib">
+                      <Button>Go to Bookshelf</Button>
+                    </Link>{" "}
+                    <Link to="/newbook">
+                      <Button
+                        onClick={() => window.location.reload()}
+                        color="google plus"
+                      >
+                        Add Another Book
+                      </Button>
+                    </Link>
+                  </Modal.Description>
+                </Modal.Content>
+              </Modal>
             </Form.Field>
+          ) : !localStorage.getItem("username") ? (
+            <Link to="/login">
+              <Button>Login to Proceed</Button>
+            </Link>
           ) : (
             undefined
           )}

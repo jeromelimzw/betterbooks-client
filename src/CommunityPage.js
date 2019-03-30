@@ -45,7 +45,7 @@ class CommunityPage extends Component {
 
           {books
             .reverse()
-            .slice(0, 6)
+            .slice(0, 10)
             .map((a, index) => {
               return (
                 <Link to={`/detailed/${a._id}`} key={index}>
@@ -66,10 +66,9 @@ class CommunityPage extends Component {
             {books
               .filter(a => a.reviews.length !== 0)
               .reverse()
-              .slice(0, 3)
-
+              .slice(0, 4)
               .map((a, index) => (
-                <Grid.Row>
+                <Grid.Row key={index}>
                   <Grid.Column>
                     <Link to={`/detailed/${a._id}`}>
                       <img
@@ -83,15 +82,19 @@ class CommunityPage extends Component {
                   </Grid.Column>
                   <Grid.Column>
                     <Feed>
-                      {a.reviews.map((a, index) => (
-                        <ReviewItem
-                          rating={a.score}
-                          review={a.review}
-                          reviewer={a.user.username}
-                          reviewerAvatar={a.user.avatarimgURL}
-                          reviewdate={a.time}
-                        />
-                      ))}
+                      {a.reviews
+                        .reverse()
+                        .slice(0, 3)
+                        .map((a, index) => (
+                          <ReviewItem
+                            key={index}
+                            rating={a.score}
+                            review={a.review}
+                            reviewer={a.user.username}
+                            reviewerAvatar={a.user.avatarimgURL}
+                            reviewdate={a.time}
+                          />
+                        ))}
                     </Feed>
                   </Grid.Column>
                 </Grid.Row>

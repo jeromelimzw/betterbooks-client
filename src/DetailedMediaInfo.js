@@ -193,81 +193,90 @@ class DetailedMediaInfo extends Component {
             </Feed>
           </Segment>
         </Segment.Group>
-        <Modal
-          trigger={<Button color="teal">Review this Book</Button>}
-          dimmer="blurring"
-          closeIcon
-        >
-          <Modal.Header>Review this Book</Modal.Header>
-          <Modal.Content image>
-            <Image wrapped size="small" src={imageUrl} />
-            <Modal.Description>
-              <p className="f3 mb0">{title}</p>
-              <p className="f5 mb2 gray">By: {authors}</p>
-              <Form>
-                <FormField>
-                  <label>Score:</label>
-                  <Rating icon="star" maxRating={10} onRate={this.handleRate} />
-                </FormField>
-                <FormField>
-                  <label>Review:</label>
-                  <textarea
-                    placeholder="write your review here"
-                    cols="70"
-                    rows="3"
-                    onChange={this.handleChangeReview}
-                  />
-                </FormField>
-              </Form>
-              <br />
-              <Modal
-                trigger={
-                  <Button onClick={this.addReview}>Submit Review</Button>
-                }
-                dimmer="blurring"
-                size="tiny"
-              >
-                <Modal.Content>
-                  <Modal.Description>
-                    <p className="f3">
-                      Your review has been submitted. <br />
-                      Thank You.
-                    </p>
-                  </Modal.Description>
-                </Modal.Content>
-              </Modal>
-            </Modal.Description>
-          </Modal.Content>
-        </Modal>
-        <Modal
-          trigger={
-            <Button onClick={this.handleAddToShelf} color="google plus">
-              Add to Shelf
-            </Button>
-          }
-          dimmer="blurring"
-        >
-          {" "}
-          <Modal.Header>Adding Book to Shelf</Modal.Header>
-          <Modal.Content image>
-            <Modal.Description>
-              <h4>
-                The book has been added to your bookshelf
-                <br />
-                Would you like to go there now?
-              </h4>
-              <Link to="/userlib">
-                <Button>Go to Bookshelf</Button>
-              </Link>
-              <Button
-                onClick={() => window.location.reload()}
-                color="google plus"
-              >
-                Continue Browsing
-              </Button>
-            </Modal.Description>
-          </Modal.Content>
-        </Modal>
+        {localStorage.getItem("username") ? (
+          <React.Fragment>
+            <Modal
+              trigger={<Button color="teal">Review this Book</Button>}
+              dimmer="blurring"
+              closeIcon
+            >
+              <Modal.Header>Review this Book</Modal.Header>
+              <Modal.Content image>
+                <Image wrapped size="small" src={imageUrl} />
+                <Modal.Description>
+                  <p className="f3 mb0">{title}</p>
+                  <p className="f5 mb2 gray">By: {authors}</p>
+                  <Form>
+                    <FormField>
+                      <label>Score:</label>
+                      <Rating
+                        icon="star"
+                        maxRating={10}
+                        onRate={this.handleRate}
+                      />
+                    </FormField>
+                    <FormField>
+                      <label>Review:</label>
+                      <textarea
+                        placeholder="write your review here"
+                        cols="70"
+                        rows="3"
+                        onChange={this.handleChangeReview}
+                      />
+                    </FormField>
+                  </Form>
+                  <br />
+                  <Modal
+                    trigger={
+                      <Button onClick={this.addReview}>Submit Review</Button>
+                    }
+                    dimmer="blurring"
+                    size="tiny"
+                  >
+                    <Modal.Content>
+                      <Modal.Description>
+                        <p className="f3">
+                          Your review has been submitted. <br />
+                          Thank You.
+                        </p>
+                      </Modal.Description>
+                    </Modal.Content>
+                  </Modal>
+                </Modal.Description>
+              </Modal.Content>
+            </Modal>
+            <Modal
+              trigger={
+                <Button onClick={this.handleAddToShelf} color="google plus">
+                  Add to Shelf
+                </Button>
+              }
+              dimmer="blurring"
+            >
+              {" "}
+              <Modal.Header>Adding Book to Shelf</Modal.Header>
+              <Modal.Content image>
+                <Modal.Description>
+                  <h4>
+                    The book has been added to your bookshelf
+                    <br />
+                    Would you like to go there now?
+                  </h4>
+                  <Link to="/userlib">
+                    <Button>Go to Bookshelf</Button>
+                  </Link>
+                  <Link to="/community">
+                    <Button color="google plus">Continue Browsing</Button>
+                  </Link>
+                </Modal.Description>
+              </Modal.Content>
+            </Modal>
+          </React.Fragment>
+        ) : (
+          <Link to="/login">
+            <Button>Login to Proceed</Button>
+          </Link>
+        )}
       </Container>
     );
   }
