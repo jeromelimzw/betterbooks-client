@@ -66,7 +66,7 @@ class SearchBooks extends Component {
 
   handleSelector = (event, { value }) => {
     this.setState({ selector: value });
-    this.getBooksInfo();
+    this.state.searchfield.length !== 0 && this.getBooksInfo();
   };
 
   render() {
