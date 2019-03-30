@@ -37,14 +37,16 @@ class SearchBooks extends Component {
 
   getBooksInfo = async () => {
     try {
-      const books = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${this.state.selector}${
-          this.state.searchfield
-        }`,
-        {
-          credentials: "include"
-        }
-      );
+      const books =
+        this.state.searchfield &&
+        (await fetch(
+          `https://www.googleapis.com/books/v1/volumes?q=${
+            this.state.selector
+          }${this.state.searchfield}`,
+          {
+            credentials: "include"
+          }
+        ));
       const res = await books.json();
       console.log(res);
       res.totalItems === 0
@@ -61,6 +63,7 @@ class SearchBooks extends Component {
   handleSubmit = event => {
     this.setState({ data: [] });
     this.getBooksInfo();
+
     event.preventDefault();
   };
 
