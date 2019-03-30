@@ -29,7 +29,7 @@ class DashBoard extends Component {
           </Header>
           <Header as="h3">
             Add more books to your shelf by{" "}
-            <Link to="newbook">ISBN search</Link>.
+            <Link to="searchbooks">ISBN search</Link>.
           </Header>
           <Header as="h3">
             Make some changes to your <Link to="myinfo">account</Link>.
