@@ -178,13 +178,8 @@ class AddNewBook extends Component {
                     <Link to="/userlib">
                       <Button>Go to Bookshelf</Button>
                     </Link>{" "}
-                    <Link to="/newbook">
-                      <Button
-                        onClick={() => window.location.reload()}
-                        color="google plus"
-                      >
-                        Add Another Book
-                      </Button>
+                    <Link to="/searchbooks">
+                      <Button color="google plus">Add Another Book</Button>
                     </Link>
                   </Modal.Description>
                 </Modal.Content>
